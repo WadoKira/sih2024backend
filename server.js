@@ -1,32 +1,43 @@
-const express   =require('express')
-const mongoose  =require('mongoose')
-const morgan    =require('morgan')
-const bodyParser=require('body-parser')
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
-const EmployeeRoute =require('./routes/Franchise')
+// Import the alumni route
+const AlumniRoute = require('./routes/alumni');
 
-mongoose.connect('mongodb+srv://Kishore:Kishore7!@practice.mbhzktk.mongodb.net/Franchise',{useNewUrlParser:true,useUnifiedTopology:true})
-const db =mongoose.connection
+// Connect to MongoDB
+mongoose.connect('mongodb+srv://Kishore:Kishore7!@practice.mbhzktk.mongodb.net/AlumniDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+const db = mongoose.connection;
 
-db.on('error',(err)=>{
-    console.log(err)
-})
+// Error handling for DB connection
+db.on('error', (err) => {
+    console.log(err);
+});
 
-db.once('open',()=>{
-    console.log('Database  Connection Established')
-})
+// Connection established message
+db.once('open', () => {
+    console.log('Database Connection Established');
+});
 
-const app=express()
+const app = express();
 
-app.use(morgan('dev'))
-app.use(bodyParser.urlencoded({extended:true}))
-app.use(bodyParser.json())
-const PORT=3009
+// Use morgan for logging HTTP requests
+app.use(morgan('dev'));
 
-app.listen(PORT,()=>{
-    console.log('Server is running on Port')
-})
+// Body-parser middleware for parsing request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
+// Port for the server
+const PORT = 3010;
 
+app.listen(PORT, () => {
+    console.log(`Server is running on Port ${PORT}`);
+});
 
-app.use('/api/Franchise',EmployeeRoute)
+// Use the Alumni API routes
+app.use('/api/alumni', AlumniRoute);
