@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-// Import the alumni route
-const AlumniRoute = require('./routes/alumni');
+// Import the fund raiser route
+const FundRaiserRoute = require('./routes/fundRaiser');
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://Kishore:Kishore7!@practice.mbhzktk.mongodb.net/AlumniDB', {
+mongoose.connect('mongodb+srv://Kishore:Kishore7!@practice.mbhzktk.mongodb.net/FundDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -33,11 +33,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Port for the server
-const PORT = 3010;
+const PORT = 3013;
 
 app.listen(PORT, () => {
     console.log(`Server is running on Port ${PORT}`);
 });
 
-// Use the Alumni API routes
-app.use('/api/alumni', AlumniRoute);
+// Use the FundRaiser API routes
+app.use('/api/fundraiser', FundRaiserRoute);
